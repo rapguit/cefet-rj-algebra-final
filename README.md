@@ -1,4 +1,5 @@
 # cefet-rj-algebra-final
+##### Python 3.5
 
 Implementar métodos de redução de banda de matrizes
 http://www.sbmac.org.br/arquivos/notas/livro_75.pdf
