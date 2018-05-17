@@ -17,7 +17,7 @@ class ConjugatedGradient:
         self.__err = err if err else 0.0
         self.__result = Result()
 
-    def calculate(self):
+    def calculate(self, data):
         a = [[]]
         b = []
         iterative_r = []
@@ -32,7 +32,7 @@ class ConjugatedGradient:
 
         iteration = 0
 
-        while (iteration < max):
+        while iteration < self.__max_iterations:
             iterative_r = minus(mult_mtx(a, iterative_v), b)
             iterative_q = mult(iterative_r, iterative_r) / mult(mult_mtx(a, iterative_r), iterative_r)
 
@@ -72,3 +72,4 @@ class ConjugatedGradient:
 
     def get_result(self):
         return self.__result
+    
