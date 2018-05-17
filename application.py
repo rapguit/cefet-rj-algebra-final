@@ -1,5 +1,5 @@
 from modules.args_factory import create_parser
-from modules.css_loader import load
+from modules.csr_loader import load
 from modules.conjugated_gradient import ConjugatedGradient
 
 if __name__ == '__main__':
