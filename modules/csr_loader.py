@@ -14,10 +14,11 @@ def load(file_path):
             if i == 1:
                 n = ln[0]
                 m = ln[1]
+                data.register_aa_size(n, m)
 
             if i > 1:
                 value = float(ln[2]) if __is_number(ln[2]) else float(ln[3])
-                row = int(ln[0])
+                row = int(ln[1])
 
                 data.register_value(value)
 
@@ -37,10 +38,12 @@ def load(file_path):
 
     data.register_ia(data.get_ia_values()[-1] + data.get_ja_values()[-1] + 1)
 
+    print("[CSR]: Matriz load")
     print(data.get_values())
     print(data.get_ia_values())
     print(data.get_ja_values())
 
+    return data
 
 def __is_number(s):
     try:

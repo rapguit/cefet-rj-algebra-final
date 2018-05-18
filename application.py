@@ -1,3 +1,5 @@
+from modules.printer import print_stats
+
 from modules.args_factory import create_parser
 from modules.csr_loader import load
 from modules.conjugated_gradient import ConjugatedGradient
@@ -11,5 +13,5 @@ if __name__ == '__main__':
     gradient = ConjugatedGradient(args.maxit, args.err)
     gradient.calculate(data)
 
-    print(gradient.get_result())
+    print_stats(gradient)
 

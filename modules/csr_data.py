@@ -4,6 +4,12 @@ class CSRData:
         self.__ia = []
         self.__ja = []
 
+    def ia(self, k):
+        return self.get_ia_values()[k]
+
+    def register_aa_size(self, n, m):
+        self.__size = {'n': int(n), 'm': int(m)}
+
     def register_value(self, val):
         self.__aa.append(val)
 
@@ -21,3 +27,6 @@ class CSRData:
 
     def get_ja_values(self):
         return self.__ja
+
+    def get_size(self):
+        return self.__size

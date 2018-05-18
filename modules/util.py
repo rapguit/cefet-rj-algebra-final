@@ -13,15 +13,18 @@ def mult(u, v):
 def mult_scalar(x, v):
     result = []
     for i in range(len(v)):
-        result[i] = x * v[i]
+        result.append(x * v[i])
 
     return result
 
 
 def mult_mtx(m, v):
-    result = []
-    for i in range(len(v)):
-        result[i] = mult(m[i], v)
+    n = m.get_size()['n']
+    result = init_array(n)
+    aa_values = m.get_values()
+    for i in range(len(m.get_ia_values())-1):
+        sub_aa_values = aa_values[m.ia(i):m.ia(i+1)]
+        result[i] = mult(sub_aa_values, v)
 
     return result
 
@@ -51,16 +54,20 @@ def mod(val):
 
 
 def plus(u, v):
-    result = []
-    for i in range(len(v)):
+    result = init_array(len(u))
+    for i in range(len(u)):
         result[i] = u[i] + v[i]
 
     return result
 
 
 def minus(u, v):
-    result = []
-    for i in range(len(v)):
+    result = init_array(len(u))
+    for i in range(len(u)):
         result[i] = u[i] - v[i]
 
     return result
+
+def init_array(size, value = 0.0):
+    return [value] * size
+
