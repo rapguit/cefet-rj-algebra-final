@@ -10,13 +10,13 @@ def load(file_path):
         row = 0
         prev_row = -1
         for i, line in enumerate(f):
-            ln = line.split(' ')
+            ln = line.replace('\n', '').split(' ')
             if i == 1:
                 n = ln[0]
                 m = ln[1]
 
             if i > 1:
-                value = float(ln[2])
+                value = float(ln[2]) if __is_number(ln[2]) else float(ln[3])
                 row = int(ln[0])
 
                 data.register_value(value)
@@ -40,3 +40,11 @@ def load(file_path):
     print(data.get_values())
     print(data.get_ia_values())
     print(data.get_ja_values())
+
+
+def __is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
