@@ -47,7 +47,7 @@ def heuristica_bandwidth(file, symetric):
 
 if __name__ == '__main__':
     
-    # Definição do argumentos de execução
+    # Definição dos argumentos de execução
     parser = argparse.ArgumentParser(description="Tempo de Execucao da Heuristica para Reducao de Largura de Banda")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-v", "--verboso", help="Execucao em tela", action="store_true")
