@@ -9,14 +9,14 @@ def load(file_path):
         k = 0
         row = 0
         prev_row = -1
+        firstline = True
         for i, line in enumerate(f):
-            ln = line.replace('\n', '').split(' ')
-            if i == 1:
-                n = ln[0]
-                m = ln[1]
-                data.register_aa_size(n, m)
+            if line.startswith("%"):
+                continue
 
-            if i > 1:
+            ln = line.replace('\n', '').split(' ')
+
+            if not firstline:
                 value = float(ln[2]) if __is_number(ln[2]) else float(ln[3])
                 row = int(ln[1])
 
@@ -35,6 +35,12 @@ def load(file_path):
 
                 data.register_ja(k)
                 prev_row = row
+            
+            if firstline:
+                n = ln[0]
+                m = ln[1]
+                data.register_aa_size(n, m)
+                firstline = False
 
     data.register_ia(data.get_ia_values()[-1] + data.get_ja_values()[-1] + 1)
 
