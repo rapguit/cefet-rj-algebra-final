@@ -62,9 +62,9 @@ def reverse_cuthill_mckee(data, symetric):
     #zz, ii, jj, kk, ll, level_len
     N = 0
     num_rows = data.get_size()['n']
-    ind = data.ind()
-    ptr = data.ptr()
-    order = np.zeros(num_rows, dtype=ind.dtype)
+    ind = data.get_ia_values()
+    ptr = data.get_ja_values()
+    order = np.zeros(num_rows)
     degree = _node_degrees(ind, ptr, num_rows)
     inds = np.argsort(degree)
     rev_inds = np.argsort(inds)
@@ -126,7 +126,7 @@ def reverse_cuthill_mckee(data, symetric):
 
 def _node_degrees(ind, ptr, num_rows):
     #ii, jj
-    degree = np.zeros(num_rows, dtype=ind.dtype)
+    degree = np.zeros(num_rows)
 
     for ii in range(num_rows):
         degree[ii] = ptr[ii + 1] - ptr[ii]
