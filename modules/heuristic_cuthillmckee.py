@@ -62,11 +62,13 @@ def reverse_cuthill_mckee(data, symetric):
     #zz, ii, jj, kk, ll, level_len
     N = 0
     num_rows = data.get_size()['n']
+    ind = data.ind()
+    ptr = data.ptr()
     order = np.zeros(num_rows, dtype=ind.dtype)
     degree = _node_degrees(ind, ptr, num_rows)
     inds = np.argsort(degree)
     rev_inds = np.argsort(inds)
-    temp_degrees = np.zeros(np.max(degree), dtype=ITYPE)
+    temp_degrees = np.zeros(np.max(degree))
     #def int32_or_int64 i, j, seed, temp2
 
     # loop over zz takes into account possible disconnected graph.
