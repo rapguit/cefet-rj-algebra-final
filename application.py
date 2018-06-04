@@ -34,7 +34,7 @@ if __name__ == '__main__':
     print("\n")
 
     # Execucao da Heuristica de Reducao de Bandwidth RCM
-    tRCM = heuristica_bandwidth(args.filename, args.symetric_mode)
+    tRCM = heuristica_bandwidth(data, args.symetric_mode)
 
     print("\n-------------------------------------------------------------------------------------------------")
     print(" [RESULTADO] - Avaliacao do Tempo de Execucao")
