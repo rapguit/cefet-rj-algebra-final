@@ -1,5 +1,6 @@
 
 # Aplicação de Avaliação de Desempenho e Tempo de Execução
+
 ##### Enviroment: Python 3.6
 
 Implementar métodos de redução de banda de matrizes com base nas heurísticas apresentadas em
@@ -9,7 +10,9 @@ http://www.sbmac.org.br/arquivos/notas/livro_75.pdf.
 * Implementar o Gradiente Conjugado com Técnica de Armazenamento de Linha (**CSR**);
 * Comparar a Heurística escolhida e o Gradiente Conjugado com relação ao tempo de processamento.
 
-_OBS.: Usar matrizes grandes com aqueles esquemas de compactação. Para maiores detalhes, acesse este catálogo de matrizes https://sparse.tamu.edu._
+**OBS.:** A heurística escolhida foi a _Cuthill-Mckee_ com reordem. 
+
+_**Recomendação**_: Usar matrizes grandes com aqueles esquemas de compactação. Para maiores detalhes, acesse este catálogo de matrizes https://sparse.tamu.edu._
 
 
 ## Como utilizar
@@ -20,7 +23,7 @@ Após baixá-lo, o repositório **raiz** (_cefet-rj-algebra-final_) terá a segu
 * Arquivos:
     * README.md
     * application.py
-* Diretórios: 
+* Diretórios:
     * datasets
     * modules
     * tests
@@ -30,6 +33,7 @@ Em seguida, acesse o diretório **_datasets_** na sua máquina e verifique os ar
 * **python** _**application.py**_ [**datasets/'_file_'.mtx**]
 
 #### Exemplo
+
 * **python** _**application.py**_ **datasets/bcsstk18.mtx**
 
 Com o comando acima, será executado o formato padrão da aplicação, que contempla o seguinte modo de execução:
@@ -39,11 +43,11 @@ Com o comando acima, será executado o formato padrão da aplicação, que conte
 Os parâmetros representados pelos valores _default_ **100**, **0.01** e **False** representam, respectivamente, máximo de iterações (**--maxit**),
 erro de tolerância (**--err**) e a propriedade simétrica da matriz (**--symetric_mode**).
 
-Para conhecer os parâmetros, execute **python** _**heuristic_cuthillmckee.py**_ **-h**
+Para conhecer os parâmetros, execute **python** _**application.py**_ **-h**
 
 **OBS.: É necessário ter o Python (3.6) instalado em sua máquina.**
 
-Por fim, para executar o **Aplicação** com outros parâmetros, basta executar o arquivo _application.py_ da seguinte forma:
+Por fim, para executar a **Aplicação** com outros parâmetros, seguem alguns exemplos:
 
 * Para matrizes não-simétricas:
     * **python** _**application.py**_ **Num-INT** **Num-FLOAT** **datasets/'_file_'.mtx**
