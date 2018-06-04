@@ -3,3 +3,4 @@ venv/
 
 *.cfg
 *.iml
+.vscode/settings.json
