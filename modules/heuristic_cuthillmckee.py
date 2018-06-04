@@ -58,14 +58,15 @@ def heuristica_bandwidth(data, symetric):
 
 def reverse_cuthill_mckee(data, symetric):
 
-    cdef np.npy_intp N = 0, N_old, level_start, level_end, temp
-    cdef np.npy_intp zz, ii, jj, kk, ll, level_len
-    cdef np.ndarray[int32_or_int64] order = np.zeros(num_rows, dtype=ind.dtype)
-    cdef np.ndarray[int32_or_int64] degree = _node_degrees(ind, ptr, num_rows)
-    cdef np.ndarray[np.npy_intp] inds = np.argsort(degree)
-    cdef np.ndarray[np.npy_intp] rev_inds = np.argsort(inds)
-    cdef np.ndarray[ITYPE_t] temp_degrees = np.zeros(np.max(degree), dtype=ITYPE)
-    cdef int32_or_int64 i, j, seed, temp2
+    #np.npy_intp N = 0, N_old, level_start, level_end, temp
+    #zz, ii, jj, kk, ll, level_len
+    N = 0
+    order = np.zeros(num_rows, dtype=ind.dtype)
+    degree = _node_degrees(ind, ptr, num_rows)
+    inds = np.argsort(degree)
+    rev_inds = np.argsort(inds)
+    temp_degrees = np.zeros(np.max(degree), dtype=ITYPE)
+    #def int32_or_int64 i, j, seed, temp2
 
     # loop over zz takes into account possible disconnected graph.
     for zz in range(num_rows):
@@ -120,13 +121,8 @@ def reverse_cuthill_mckee(data, symetric):
     return order[::-1]
 
 
-cdef _node_degrees(
-    np.ndarray[int32_or_int64, ndim = 1, mode = "c"] ind,
-    np.ndarray[int32_or_int64, ndim = 1, mode = "c"] ptr,
-    np.npy_intp num_rows):
-
-    cdef np.npy_intp ii, jj
-    cdef np.ndarray[int32_or_int64]
+def _node_degrees(ind, ptr, num_rows):
+    #ii, jj
     degree = np.zeros(num_rows, dtype=ind.dtype)
 
     for ii in range(num_rows):
