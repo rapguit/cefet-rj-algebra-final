@@ -9,26 +9,26 @@ from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import reverse_cuthill_mckee
 
 # Constants
-NONSYMETRIC = "==> Execução menos otimizada. OBS.: Para otimizar, acrescente 'True' na execucao)"
-YESSYMETRIC = "==> Execução mais otimizada ;)"
+NONSYMETRIC = "==> Execucao menos otimizada. OBS.: Para otimizar, acrescente 'True' na execucao)"
+YESSYMETRIC = "==> Execucao mais otimizada ;)"
 
 def heuristica_bandwidth(file, symetric):
     """
-    Descrição
+    Descricao
     -----------
-    Reduz a largura de banda de uma Matriz grandes com a Heurística RCM (Reverse-Cuthill-Mckee).
-    Paramêtros
+    Reduz a largura de banda de uma Matriz grandes com a Heuristica RCM (Reverse-Cuthill-Mckee).
+    Parametros
     ----------
     Symetric_mode: True (ou False), se a Matriz for simetrica (ou nao simetrica)\n
     filename: O nome do arquivo da matriz (extensoes .mtx, .mtz.gz)
     Retorno
     -------
-    O tempo de execução da heurística de redução de largura de banda.
+    O tempo de execucao da heuristica de reducao de largura de banda.
 
-    Para maiores detalhes sobre a heurística desta classe:
+    Para maiores detalhes sobre a heuristica desta classe:
     --------------------------------------------------------------
-    Gonzaga de Oliveira, Sanderson L., "INTRODUÇÃO A HEURÍSTICAS PARA REDUÇÃO DE LARGURA DE BANDA DE MATRIZES", \
-    Notas em Matemática Aplicada, Volume 75, (2014). E-ISSN 2236-5915.
+    Gonzaga de Oliveira, Sanderson L., "INTRODUCAO A HEURISTICAS PARA REDUCAO DE LARGURA DE BANDA DE MATRIZES", \
+    Notas em Matematica Aplicada, Volume 75, (2014). E-ISSN 2236-5915.
     Para obter novas matrizes:
     --------------------------
     https://sparse.tamu.edu
@@ -52,8 +52,8 @@ def heuristica_bandwidth(file, symetric):
     print("\n-------------------------------------------------------------------------------------------------")
     print(" [SUMARIO] - Apresentando a Matriz")
     print("-------------------------------------------------------------------------------------------------\n")
-    print(" Dimensao (NxN): \t", matriz.shape)
-    print(" Elementos NONZERO: \t", matriz.nnz)
+    #print(" Dimensao (NxN): \t", matriz.shape)
+    #print(" Elementos NONZERO: \t", matriz.nnz)
     print(" Arquivo da Matriz: \t", file)
 
     if symetric == None or symetric == False:
@@ -61,6 +61,6 @@ def heuristica_bandwidth(file, symetric):
     else:
         texto = YESSYMETRIC
 
-    print(" Matriz Simétrica: \t", symetric, texto)
+    print(" Matriz Simetrica: \t", symetric, texto)
 
     return (t2 - t1)

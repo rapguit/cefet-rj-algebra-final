@@ -11,14 +11,7 @@ if __name__ == '__main__':
     parser = create_parser()
     args = parser.parse_args()
 
-    if args.maxit == None:
-        args.maxit = 100
-    elif args.err == None:
-        args.err = 0.01
-    elif args.filename == None:
-        print("Parametro requerido para a aplicacao.")
-    else:
-        print("\n============================ COMPARACAO DE DESEMPENHO: CG vs RCM ============================\n")
+    print("\n============================ COMPARACAO DE DESEMPENHO: CG vs RCM ============================\n")
 
     # Carregando o arquivo de matriz
     data = load(args.filename)
@@ -30,7 +23,7 @@ if __name__ == '__main__':
     t1 = time.time()
     print("\tInicio\t- ", date.datetime.fromtimestamp(t1))
     
-    # Execução do Gradiente Conjugado
+    #Execucao do Gradiente Conjugado
     gradient = ConjugatedGradient(args.maxit, args.err)
     gradient.calculate(data)
     t2 = time.time()
@@ -40,7 +33,7 @@ if __name__ == '__main__':
     print(" Tempo de Execucao do Metodo Iterativo GRADIENTE-CONJUGADO: ", tGC)
     print("\n")
 
-    # Execução da Heurística de Redução de Bandwidth RCM
+    # Execucao da Heuristica de Reducao de Bandwidth RCM
     tRCM = heuristica_bandwidth(args.filename, args.symetric_mode)
 
     print("\n-------------------------------------------------------------------------------------------------")
@@ -56,8 +49,8 @@ if __name__ == '__main__':
 
     print("-------------------------------------------------------------------------------------------------")
 
-    # Auxílio por help
-    print("\n[Ajuda] Para conhecer os parâmetros, execute: 'python application.py -h'")
+    # Auxilio por help
+    print("\n[Ajuda] Para conhecer os parametros, execute: 'python application.py -h'")
     print("[Exemplo] Para execucao padrao, execute: 'python application.py datasets/<FILE>.mtx' \n")
 
         
