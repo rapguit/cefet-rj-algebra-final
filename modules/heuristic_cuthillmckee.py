@@ -3,6 +3,7 @@
 import numpy as np
 import datetime as date
 import time as time
+from modules.csr_matriz import csr_matrix
 
 # Constants
 NONSYMETRIC = "==> Execucao menos otimizada. OBS.: Para otimizar, acrescente 'True' na execucao)"
@@ -44,7 +45,7 @@ def heuristica_bandwidth(data, symetric):
     print("-------------------------------------------------------------------------------------------------\n")
     #print(" Dimensao (NxN): \t", matriz.shape)
     #print(" Elementos NONZERO: \t", matriz.nnz)
-    print(" Arquivo da Matriz: \t", file)
+    print(" Arquivo da Matriz: \t", data.file)
 
     if symetric == None or symetric == False:
         texto = NONSYMETRIC
@@ -63,12 +64,20 @@ def reverse_cuthill_mckee(data, symetric):
     N = 0
     num_rows = data.get_size()['n']
     ind = data.get_ia_values()
-    ptr = data.get_ja_values()
+    ptr = data.get_ja_values()   # Precisa ser revisto!!!!!!! Aqui tem que receber uma lista de indices
     order = np.zeros(num_rows)
     degree = _node_degrees(ind, ptr, num_rows)
+    print(degree)
+
     inds = np.argsort(degree)
+    print(inds)
+
     rev_inds = np.argsort(inds)
-    temp_degrees = np.zeros(np.max(degree))
+    print(rev_inds)
+
+    temp_degrees = np.zeros(int(np.max(degree)))
+    print(temp_degrees)                 # Funcionando até aqui
+
     #def int32_or_int64 i, j, seed, temp2
 
     # loop over zz takes into account possible disconnected graph.
@@ -87,7 +96,7 @@ def reverse_cuthill_mckee(data, symetric):
                     N_old = N
 
                     # add unvisited neighbors
-                    for jj in range(ptr[i], ptr[i + 1]):
+                    for jj in range(ptr[i], ptr[i + 1]):   # TypeError: list indices must be integers or slices, not numpy.float64
                         # j is node number connected to i
                         j = ind[jj]
                         if inds[rev_inds[j]] != -1:
