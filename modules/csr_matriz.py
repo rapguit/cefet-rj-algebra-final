@@ -3,12 +3,9 @@
 
 import numpy as np
 
-#from .base import spmatrix
-#from ._sparsetools import get_csr_submatrix, csr_sample_values
-# from .sputils import IndexMixin
-#from .compressed import _cs_matrix
 
 ################################## class utils(): ####################################
+
 def isdense(x):
     return isinstance(x, np.ndarray)
 
@@ -91,143 +88,6 @@ def ismatrix(t):
     return ((isinstance(t, (list, tuple)) and
              len(t) > 0 and issequence(t[0])) or
             (isinstance(t, np.ndarray) and t.ndim == 2))
-
-
-# class IndexMixin(object):
-#     """
-#     This class simply exists to hold the methods necessary for fancy indexing.
-#     """
-    # def _slicetoarange(self, j, shape):
-    #     """ Given a slice object, use numpy arange to change it to a 1D
-    #     array.
-    #     """
-    #     start, stop, step = j.indices(shape)
-    #     return np.arange(start, stop, step)
-
-    # def _unpack_index(self, index):
-    #     """ Parse index. Always return a tuple of the form (row, col).
-    #     Where row/col is a integer, slice, or array of integers.
-    #     """
-    #     # First, check if indexing with single boolean matrix.
-    #     # from .base import spmatrix  # This feels dirty but...
-    #     # if (isinstance(index, (spmatrix, np.ndarray)) and
-    #     #    (index.ndim == 2) and index.dtype.kind == 'b'):
-    #     #         return index.nonzero()
-
-    #     # Parse any ellipses.
-    #     index = self._check_ellipsis(index)
-
-    #     # Next, parse the tuple or object
-    #     if isinstance(index, tuple):
-    #         if len(index) == 2:
-    #             row, col = index
-    #         elif len(index) == 1:
-    #             row, col = index[0], slice(None)
-    #         else:
-    #             raise IndexError('invalid number of indices')
-    #     else:
-    #         row, col = index, slice(None)
-
-    #     # Next, check for validity, or transform the index as needed.
-    #     row, col = self._check_boolean(row, col)
-    #     return row, col
-
-    # def _check_ellipsis(self, index):
-    #     """Process indices with Ellipsis. Returns modified index."""
-    #     if index is Ellipsis:
-    #         return (slice(None), slice(None))
-    #     elif isinstance(index, tuple):
-    #         # Find first ellipsis
-    #         for j, v in enumerate(index):
-    #             if v is Ellipsis:
-    #                 first_ellipsis = j
-    #                 break
-    #         else:
-    #             first_ellipsis = None
-
-    #         # Expand the first one
-    #         if first_ellipsis is not None:
-    #             # Shortcuts
-    #             if len(index) == 1:
-    #                 return (slice(None), slice(None))
-    #             elif len(index) == 2:
-    #                 if first_ellipsis == 0:
-    #                     if index[1] is Ellipsis:
-    #                         return (slice(None), slice(None))
-    #                     else:
-    #                         return (slice(None), index[1])
-    #                 else:
-    #                     return (index[0], slice(None))
-
-    #             # General case
-    #             tail = ()
-    #             for v in index[first_ellipsis+1:]:
-    #                 if v is not Ellipsis:
-    #                     tail = tail + (v,)
-    #             nd = first_ellipsis + len(tail)
-    #             nslice = max(0, 2 - nd)
-    #             return index[:first_ellipsis] + (slice(None),)*nslice + tail
-
-    #     return index
-
-    # def _check_boolean(self, row, col):
-    #     # from .base import isspmatrix  # ew...
-    #     # # Supporting sparse boolean indexing with both row and col does
-    #     # # not work because spmatrix.ndim is always 2.
-    #     # if isspmatrix(row) or isspmatrix(col):
-    #     #     raise IndexError(
-    #     #         "Indexing with sparse matrices is not supported "
-    #     #         "except boolean indexing where matrix and index "
-    #     #         "are equal shapes.")
-    #     if isinstance(row, np.ndarray) and row.dtype.kind == 'b':
-    #         row = self._boolean_index_to_array(row)
-    #     if isinstance(col, np.ndarray) and col.dtype.kind == 'b':
-    #         col = self._boolean_index_to_array(col)
-    #     return row, col
-
-    # def _boolean_index_to_array(self, i):
-    #     if i.ndim > 1:
-    #         raise IndexError('invalid index shape')
-    #     return i.nonzero()[0]
-
-    # def _index_to_arrays(self, i, j):
-    #     i, j = self._check_boolean(i, j)
-
-    #     i_slice = isinstance(i, slice)
-    #     if i_slice:
-    #         i = self._slicetoarange(i, self.shape[0])[:, None]
-    #     else:
-    #         i = np.atleast_1d(i)
-
-    #     if isinstance(j, slice):
-    #         j = self._slicetoarange(j, self.shape[1])[None, :]
-    #         if i.ndim == 1:
-    #             i = i[:, None]
-    #         elif not i_slice:
-    #             raise IndexError('index returns 3-dim structure')
-    #     elif isscalarlike(j):
-    #         # row vector special case
-    #         j = np.atleast_1d(j)
-    #         if i.ndim == 1:
-    #             i, j = np.broadcast_arrays(i, j)
-    #             i = i[:, None]
-    #             j = j[:, None]
-    #             return i, j
-    #     else:
-    #         j = np.atleast_1d(j)
-    #         if i_slice and j.ndim > 1:
-    #             raise IndexError('index returns 3-dim structure')
-
-    #     i, j = np.broadcast_arrays(i, j)
-
-    #     if i.ndim == 1:
-    #         # return column vectors for 1-D indexing
-    #         i = i[None, :]
-    #         j = j[None, :]
-    #     elif i.ndim > 2:
-    #         raise IndexError("Index dimension must be <= 2")
-
-    #     return i, j
 
 
 class csr_matrix(np.ndarray):
@@ -319,8 +179,6 @@ class csr_matrix(np.ndarray):
     array([[2, 1, 0, 0],
            [0, 1, 1, 1]])
     """
-    #format = 'csr'
-
 
     def _slicetoarange(self, j, shape):
         """ Given a slice object, use numpy arange to change it to a 1D
@@ -453,107 +311,6 @@ class csr_matrix(np.ndarray):
             raise IndexError("Index dimension must be <= 2")
 
         return i, j
-
-
-
-
-    def transpose(self, axes=None, copy=False):
-        if axes is not None:
-            raise ValueError(("Sparse matrices do not support "
-                              "an 'axes' parameter because swapping "
-                              "dimensions is the only logical permutation."))
-
-        # M, N = self.shape
-
-        # from .csc import csc_matrix
-        # return csc_matrix((self.data, self.indices,
-        #                    self.indptr), shape=(N, M), copy=copy)
-
-    # transpose.__doc__ = spmatrix.transpose.__doc__
-
-    # def tolil(self, copy=False):
-    #     from .lil import lil_matrix
-    #     lil = lil_matrix(self.shape,dtype=self.dtype)
-
-    #     self.sum_duplicates()
-    #     ptr,ind,dat = self.indptr,self.indices,self.data
-    #     rows, data = lil.rows, lil.data
-
-    #     for n in xrange(self.shape[0]):
-    #         start = ptr[n]
-    #         end = ptr[n+1]
-    #         rows[n] = ind[start:end].tolist()
-    #         data[n] = dat[start:end].tolist()
-
-    #     return lil
-
-    # tolil.__doc__ = spmatrix.tolil.__doc__
-
-    # def tocsr(self, copy=False):
-    #     if copy:
-    #         return self.copy()
-    #     else:
-    #         return self
-
-    # tocsr.__doc__ = spmatrix.tocsr.__doc__
-
-    # def tocsc(self, copy=False):
-    #     idx_dtype = get_index_dtype((self.indptr, self.indices),
-    #                                 maxval=max(self.nnz, self.shape[0]))
-    #     indptr = np.empty(self.shape[1] + 1, dtype=idx_dtype)
-    #     indices = np.empty(self.nnz, dtype=idx_dtype)
-    #     data = np.empty(self.nnz, dtype=upcast(self.dtype))
-
-    #     csr_tocsc(self.shape[0], self.shape[1],
-    #               self.indptr.astype(idx_dtype),
-    #               self.indices.astype(idx_dtype),
-    #               self.data,
-    #               indptr,
-    #               indices,
-    #               data)
-
-    #     from .csc import csc_matrix
-    #     A = csc_matrix((data, indices, indptr), shape=self.shape)
-    #     A.has_sorted_indices = True
-    #     return A
-
-    # tocsc.__doc__ = spmatrix.tocsc.__doc__
-
-    # def tobsr(self, blocksize=None, copy=True):
-    #     from .bsr import bsr_matrix
-
-    #     if blocksize is None:
-    #         from .spfuncs import estimate_blocksize
-    #         return self.tobsr(blocksize=estimate_blocksize(self))
-
-    #     elif blocksize == (1,1):
-    #         arg1 = (self.data.reshape(-1,1,1),self.indices,self.indptr)
-    #         return bsr_matrix(arg1, shape=self.shape, copy=copy)
-
-    #     else:
-    #         R,C = blocksize
-    #         M,N = self.shape
-
-    #         if R < 1 or C < 1 or M % R != 0 or N % C != 0:
-    #             raise ValueError('invalid blocksize %s' % blocksize)
-
-    #         blks = csr_count_blocks(M,N,R,C,self.indptr,self.indices)
-
-    #         idx_dtype = get_index_dtype((self.indptr, self.indices),
-    #                                     maxval=max(N//C, blks))
-    #         indptr = np.empty(M//R+1, dtype=idx_dtype)
-    #         indices = np.empty(blks, dtype=idx_dtype)
-    #         data = np.zeros((blks,R,C), dtype=self.dtype)
-
-    #         csr_tobsr(M, N, R, C,
-    #                   self.indptr.astype(idx_dtype),
-    #                   self.indices.astype(idx_dtype),
-    #                   self.data,
-    #                   indptr, indices, data.ravel())
-
-    #         return bsr_matrix((data,indices,indptr), shape=self.shape)
-
-    # tobsr.__doc__ = spmatrix.tobsr.__doc__
 
     # these functions are used by the parent class (_cs_matrix)
     # to remove redudancy between csc_matrix and csr_matrix
@@ -794,25 +551,3 @@ class csr_matrix(np.ndarray):
         shape = (i1 - i0, j1 - j0)
         return self.__class__((data, indices, indptr), shape=shape,
                               dtype=self.dtype, copy=False)
-
-
-# def isspmatrix_csr(x):
-#     """Is x of csr_matrix type?
-#     Parameters
-#     ----------
-#     x
-#         object to check for being a csr matrix
-#     Returns
-#     -------
-#     bool
-#         True if x is a csr matrix, False otherwise
-#     Examples
-#     --------
-#     >>> from scipy.sparse import csr_matrix, isspmatrix_csr
-#     >>> isspmatrix_csr(csr_matrix([[5]]))
-#     True
-#     >>> from scipy.sparse import csc_matrix, csr_matrix, isspmatrix_csc
-#     >>> isspmatrix_csr(csc_matrix([[5]]))
-#     False
-#     """
-#     return isinstance(x, csr_matrix)

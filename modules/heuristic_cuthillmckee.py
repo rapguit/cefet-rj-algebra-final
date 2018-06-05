@@ -96,7 +96,7 @@ def reverse_cuthill_mckee(data, symetric):
                     N_old = N
 
                     # add unvisited neighbors
-                    for jj in range(ptr[i], ptr[i + 1]):   # TypeError: list indices must be integers or slices, not numpy.float64
+                    for jj in range(ptr[i], ptr[i + 1]):   # ERRO AQUI: list indices must be integers or slices, not numpy.float64
                         # j is node number connected to i
                         j = ind[jj]
                         if inds[rev_inds[j]] != -1:
