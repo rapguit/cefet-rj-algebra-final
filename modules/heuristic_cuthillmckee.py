@@ -1,4 +1,4 @@
-
+from numbers import Number
 
 import numpy as np
 import datetime as date
@@ -45,7 +45,7 @@ def heuristica_bandwidth(data, symetric):
     print("-------------------------------------------------------------------------------------------------\n")
     #print(" Dimensao (NxN): \t", matriz.shape)
     #print(" Elementos NONZERO: \t", matriz.nnz)
-    print(" Arquivo da Matriz: \t", data.file)
+    #print(" Arquivo da Matriz: \t", data.file)
 
     if symetric == None or symetric == False:
         texto = NONSYMETRIC
@@ -64,21 +64,13 @@ def reverse_cuthill_mckee(data, symetric):
     N = 0
     num_rows = data.get_size()['n']
     ind = data.get_ia_values()
-    ptr = data.get_ja_values()   # Precisa ser revisto!!!!!!! Aqui tem que receber uma lista de indices
-    order = np.zeros(num_rows)
+    ptr = data.get_ja_values()
+    order = np.zeros(num_rows, dtype=Number)
     degree = _node_degrees(ind, ptr, num_rows)
-    print(degree)
 
     inds = np.argsort(degree)
-    print(inds)
-
     rev_inds = np.argsort(inds)
-    print(rev_inds)
-
     temp_degrees = np.zeros(int(np.max(degree)))
-    print(temp_degrees)                 # Funcionando até aqui
-
-    #def int32_or_int64 i, j, seed, temp2
 
     # loop over zz takes into account possible disconnected graph.
     for zz in range(num_rows):
