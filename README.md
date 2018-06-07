@@ -6,13 +6,13 @@
 Implementar métodos de redução de banda de matrizes com base nas heurísticas apresentadas em
 http://www.sbmac.org.br/arquivos/notas/livro_75.pdf.
 
-* Implementar uma das Heurísticas apresentadas no livro;
+* Implementar uma das Heurísticas apresentadas no livro referência acima;
 * Implementar o Gradiente Conjugado com Técnica de Armazenamento de Linha (**CSR**);
 * Comparar a Heurística escolhida e o Gradiente Conjugado com relação ao tempo de processamento.
 
-**OBS.:** A heurística escolhida foi a _Cuthill-Mckee_ com reordem. 
+**OBS.:** A heurística escolhida foi a _Cuthill-Mckee_ com reordem.
 
-_**Recomendação**_: Usar matrizes grandes com aqueles esquemas de compactação. Para maiores detalhes, acesse este catálogo de matrizes https://sparse.tamu.edu._
+_**Recomendação**_: Usar matrizes grandes com aqueles esquemas de compactação. Para maiores detalhes, acesse este catálogo de matrizes https://sparse.tamu.edu.
 
 
 ## Como utilizar
