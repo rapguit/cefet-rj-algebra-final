@@ -5,18 +5,13 @@ from modules.util import init_array
 #REMOVER
 import numpy as np
 
-# Constants
-NONSYMETRIC = "==> Execucao menos otimizada. OBS.: Para otimizar, acrescente 'True' na execucao)"
-YESSYMETRIC = "==> Execucao mais otimizada ;)"
-
-def heuristica_bandwidth(data, symetric):
+def heuristica_bandwidth(data):
     """
     Descricao
     -----------
-    Reduz a largura de banda de uma Matriz grandes com a Heuristica RCM (Reverse-Cuthill-Mckee).
+    Reduz a largura de banda de uma matriz grande com a Heuristica RCM (Reverse-Cuthill-Mckee).
     Parametros
     ----------
-    Symetric_mode: True (ou False), se a Matriz for simetrica (ou nao simetrica)\n
     filename: O nome do arquivo da matriz (extensoes .mtx, .mtz.gz)
     Retorno
     -------
@@ -34,104 +29,86 @@ def heuristica_bandwidth(data, symetric):
     print(" Aplicando a Heuristica REVERSE-CUTHIL-MCKEE")
     t1 = time.time()
     print("\tInicio\t- ", date.datetime.fromtimestamp(t1))
-    reverse_cuthill_mckee(data, symetric)
+    reverse_cuthill_mckee(data)
     t2 = time.time()
     print("\tTermino\t- ", date.datetime.fromtimestamp(t2))
     print(" Tempo de Execucao da Heuristica REVERSE-CUTHIL-MCKEE: ", t2 - t1)
 
-    # Sumarizando o Dataset da Matriz
-    print("\n-------------------------------------------------------------------------------------------------")
-    print(" [SUMARIO] - Apresentando a Matriz")
-    print("-------------------------------------------------------------------------------------------------\n")
-    #print(" Dimensao (NxN): \t", matriz.shape)
-    #print(" Elementos NONZERO: \t", matriz.nnz)
-    #print(" Arquivo da Matriz: \t", data.file)
-
-    if symetric == None or symetric == False:
-        texto = NONSYMETRIC
-    else:
-        texto = YESSYMETRIC
-
-    print(" Matriz Simetrica: \t", symetric, texto)
-
     return (t2 - t1)
 
 
-def reverse_cuthill_mckee(data, symetric):
-
+def reverse_cuthill_mckee(data):
     N = 0
     num_rows = data.get_size()['n']
     ind = data.get_ia_values()
     ptr = data.get_ja_values()
     order = init_array(num_rows)
-    degree = _node_degrees(ind, ptr, num_rows)
+    degree = node_degrees(ind, ptr, num_rows)
 
-    inds = np.argsort(degree)   #SUBSTITUIR argsort
-    rev_inds = np.argsort(inds) #SUBSTITUIR argsort
-    temp_degrees = init_array(int(np.max(degree)))  #SUBSTITUIR max
+    indices = np.argsort(degree)   #SUBSTITUIR argsort
+    rev_indices = np.argsort(indices) #SUBSTITUIR argsort 
+    temp_degrees = init_array(max(degree)) 
 
-    # loop over zz takes into account possible disconnected graph.
-    for zz in range(num_rows):
-        if inds[zz] != -1:  # Do BFS with seed=inds[zz]
-            seed = inds[zz]
+    # Iniciando o Grafo
+    for pos in range(num_rows):
+        if indices[pos] != -1:  
+            seed = indices[pos]
             order[N] = seed
             N += 1
-            inds[rev_inds[seed]] = -1
+            indices[rev_indices[seed]] = -1
             level_start = N - 1
             level_end = N
 
             while level_start < level_end:
-                for ii in range(level_start, level_end):
-                    i = order[ii]
+                for it in range(level_start, level_end):
+                    i = order[it]
                     N_old = N
 
-                    # add unvisited neighbors
-                    for jj in range(ptr[i], ptr[i + 1]):   # ERRO AQUI: list indices must be integers or slices, not numpy.float64
-                        # j is node number connected to i
-                        j = ind[jj]
-                        if inds[rev_inds[j]] != -1:
-                            inds[rev_inds[j]] = -1
+                    # Adicionando vértices vizinhos
+                    for idx in range(ptr[i], ptr[i + 1]): 
+                        j = ind[idx]
+                        if indices[rev_indices[j]] != -1:
+                            indices[rev_indices[j]] = -1
                             order[N] = j
                             N += 1
 
-                    # Add values to temp_degrees array for insertion sort
+                    # Adiciona valores já ordenados na lista temp_degrees
                     level_len = 0
-                    for kk in range(N_old, N):
-                        temp_degrees[level_len] = degree[order[kk]]
+                    for k in range(N_old, N):
+                        temp_degrees[level_len] = degree[order[k]]
                         level_len += 1
 
-                    # Do insertion sort for nodes from lowest to highest degree
-                    for kk in range(1, level_len):
-                        temp = temp_degrees[kk]
-                        temp2 = order[N_old + kk]
-                        ll = kk
-                        while (ll > 0) and (temp < temp_degrees[ll - 1]):
-                            temp_degrees[ll] = temp_degrees[ll - 1]
-                            order[N_old + ll] = order[N_old + ll - 1]
-                            ll -= 1
-                        temp_degrees[ll] = temp
-                        order[N_old + ll] = temp2
+                    # Insere os vértices já ordenados de forma crescente
+                    for k in range(1, level_len):
+                        temp = temp_degrees[k]
+                        temp2 = order[N_old + k]
+                        vertex = k
+                        while (vertex > 0) and (temp < temp_degrees[vertex - 1]):
+                            temp_degrees[vertex] = temp_degrees[vertex - 1]
+                            order[N_old + vertex] = order[N_old + vertex - 1]
+                            vertex -= 1
+                        temp_degrees[vertex] = temp
+                        order[N_old + vertex] = temp2
 
-                # set next level start and end ranges
+                # Atualiza o início e fim do próximo nível
                 level_start = level_end
                 level_end = N
 
         if N == num_rows:
             break
 
-    # return reversed order for RCM ordering
+    # reordena o grafo
     return order[::-1]
 
 
-def _node_degrees(ind, ptr, num_rows):
-    degree = init_array(num_rows)
+def node_degrees(idx, ptr, num_rows):
+    degree = init_array(num_rows) # criando novos vértices
 
-    for ii in range(num_rows):
-        degree[ii] = ptr[ii + 1] - ptr[ii]
-        for jj in range(ptr[ii], ptr[ii + 1]):
-            if ind[jj] == ii:
-                # add one if the diagonal is in row ii
-                degree[ii] += 1
+    for i in range(num_rows):
+        degree[i] = ptr[i + 1] - ptr[i]
+        for j in range(ptr[i], ptr[i + 1]):
+            if idx[j] == i:
+                degree[i] += 1    # adiciona novo vértice na diagonal
                 break
 
     return degree
