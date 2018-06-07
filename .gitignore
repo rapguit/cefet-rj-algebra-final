@@ -6,3 +6,6 @@ venv/
 .vscode/settings.json
 .vscode/.ropeproject/objectdb
 .vscode/.ropeproject/config.py
+*.pyc
+modules/.DS_Store
+modules/__pycache__/.DS_Store
