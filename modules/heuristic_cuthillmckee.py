@@ -1,9 +1,9 @@
-from numbers import Number
-
-import numpy as np
 import datetime as date
 import time as time
-from modules.csr_matriz import csr_matrix
+from modules.util import init_array
+
+#REMOVER
+import numpy as np
 
 # Constants
 NONSYMETRIC = "==> Execucao menos otimizada. OBS.: Para otimizar, acrescente 'True' na execucao)"
@@ -59,18 +59,16 @@ def heuristica_bandwidth(data, symetric):
 
 def reverse_cuthill_mckee(data, symetric):
 
-    #np.npy_intp N = 0, N_old, level_start, level_end, temp
-    #zz, ii, jj, kk, ll, level_len
     N = 0
     num_rows = data.get_size()['n']
     ind = data.get_ia_values()
     ptr = data.get_ja_values()
-    order = np.zeros(num_rows, dtype=Number)
+    order = init_array(num_rows)
     degree = _node_degrees(ind, ptr, num_rows)
 
-    inds = np.argsort(degree)
-    rev_inds = np.argsort(inds)
-    temp_degrees = np.zeros(int(np.max(degree)))
+    inds = np.argsort(degree)   #SUBSTITUIR argsort
+    rev_inds = np.argsort(inds) #SUBSTITUIR argsort
+    temp_degrees = init_array(int(np.max(degree)))  #SUBSTITUIR max
 
     # loop over zz takes into account possible disconnected graph.
     for zz in range(num_rows):
@@ -126,8 +124,7 @@ def reverse_cuthill_mckee(data, symetric):
 
 
 def _node_degrees(ind, ptr, num_rows):
-    #ii, jj
-    degree = np.zeros(num_rows)
+    degree = init_array(num_rows)
 
     for ii in range(num_rows):
         degree[ii] = ptr[ii + 1] - ptr[ii]

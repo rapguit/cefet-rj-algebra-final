@@ -68,6 +68,6 @@ def minus(u, v):
 
     return result
 
-def init_array(size, value = 0.0):
+def init_array(size, value = 0):
     return [value] * size
 
