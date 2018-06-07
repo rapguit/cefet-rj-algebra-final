@@ -1,3 +1,7 @@
+import numpy as np
+
+
+
 def copy(arr):
     return list(arr)
 
@@ -70,4 +74,8 @@ def minus(u, v):
 
 def init_array(size, value = 0):
     return [value] * size
+
+def get_index_order(obj):
+    return np.argsort(obj)
+
 

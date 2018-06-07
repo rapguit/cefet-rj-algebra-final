@@ -1,6 +1,6 @@
 import datetime as date
 import time as time
-from modules.util import init_array
+from modules.util import init_array, get_index_order
 
 #REMOVER
 import numpy as np
@@ -45,8 +45,8 @@ def reverse_cuthill_mckee(data):
     order = init_array(num_rows)
     degree = node_degrees(ind, ptr, num_rows)
 
-    indices = np.argsort(degree)   #SUBSTITUIR argsort
-    rev_indices = np.argsort(indices) #SUBSTITUIR argsort 
+    indices = get_index_order(degree)   
+    rev_indices = get_index_order(indices)
     temp_degrees = init_array(max(degree)) 
 
     # Iniciando o Grafo

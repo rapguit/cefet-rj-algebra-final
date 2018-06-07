@@ -40,8 +40,7 @@ Com o comando acima, será executado o formato padrão da aplicação, que conte
 
 * **python** _**application.py**_ 100 0.01 False **datasets/bcsstk18.mtx**
 
-Os parâmetros representados pelos valores _default_ **100**, **0.01** e **False** representam, respectivamente, máximo de iterações (**--maxit**),
-erro de tolerância (**--err**) e a propriedade simétrica da matriz (**--symetric_mode**).
+Os parâmetros representados pelos valores _default_ **100** e **0.01** representam, respectivamente, máximo de iterações (**--maxit**) e erro de tolerância (**--err**).
 
 Para conhecer os parâmetros, execute **python** _**application.py**_ **-h**
 
@@ -49,11 +48,9 @@ Para conhecer os parâmetros, execute **python** _**application.py**_ **-h**
 
 Por fim, para executar a **Aplicação** com outros parâmetros, seguem alguns exemplos:
 
-* Para matrizes não-simétricas:
-    * **python** _**application.py**_ **Num-INT** **Num-FLOAT** **datasets/'_file_'.mtx**
+* **python** _**application.py**_ **--maxit 50** **--err 0.0001** **datasets/'_file_'.mtx**
 
-* Para matrizes simétricas:
-    * **python** _**application.py**_ **Num-INT** **Num-FLOAT** **True** **datasets/'_file_'.mtx**
+* **python** _**application.py**_ **--maxit 70** **--err 0.000001** **datasets/'_file_'.mtx**
 
 ## Resultado
 
@@ -61,42 +58,31 @@ Ao final da execução será apresentado um relório descrevendo a execução da
 
 ```shell
 -------------------------------------------------------------------------------------------------
- [RELATORIO] - Descricao da Execucao
+ [RELATORIO] - Descrição da Execução
 -------------------------------------------------------------------------------------------------
 
- Aplicando o Metodo Iterativo GRADIENTE-CONJUGADO
-        Inicio  -  2018-06-03 22:35:27.449495
-        Termino -  2018-06-03 22:35:27.451965
- Tempo de Execucao do Metodo Iterativo GRADIENTE-CONJUGADO:  0.002469778060913086
+ Aplicando o Método Iterativo GRADIENTE-CONJUGADO
+        Início  -  2018-06-03 22:35:27.449495
+        Término -  2018-06-03 22:35:27.451965
+ Tempo de Execução do Metodo Iterativo GRADIENTE-CONJUGADO:  0.002469778060913086
 
 
- Aplicando a Heuristica REVERSE-CUTHIL-MCKEE
-        Inicio  -  2018-06-03 22:35:27.456298
-        Termino -  2018-06-03 22:35:27.456473
- Tempo de Execucao da Heuristica REVERSE-CUTHIL-MCKEE:  0.00017523765563964844
+ Aplicando a Heurística REVERSE-CUTHIL-MCKEE
+        Início  -  2018-06-03 22:35:27.456298
+        Término -  2018-06-03 22:35:27.456473
+ Tempo de Execução da Heurística REVERSE-CUTHIL-MCKEE:  0.00017523765563964844
 ```
 
 ```shell
 -------------------------------------------------------------------------------------------------
- [SUMARIO] - Apresentando a Matriz
--------------------------------------------------------------------------------------------------
-
- Dimensao (NxN):         (153, 153)
- Elementos NONZERO:      2423
- Arquivo da Matriz:      datasets/input153x153.mtx
- Matriz Simétrica:       True ==> Execução mais otimizada ;)
-```
-
-```shell
--------------------------------------------------------------------------------------------------
- [RESULTADO] - Avaliacao do Tempo de Execucao
+ [RESULTADO] - Avaliação do Tempo de Execução
 -------------------------------------------------------------------------------------------------
 
  REVERSE-CUTHIL-MCKEE teve DESEMPENHO MELHOR que GRADIENTE-CONJUGADO
 -------------------------------------------------------------------------------------------------
 
 [Ajuda] Para conhecer os parâmetros, execute: 'python application.py -h'
-[Exemplo] Para execucao padrao, execute: 'python application.py datasets/<FILE>.mtx'
+[Exemplo] Para execução padrão, execute: 'python application.py datasets/<FILE>.mtx'
 ```
 
 Para conhecer os parâmetros, execute **python** _**application.py**_ **-h**.
