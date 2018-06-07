@@ -2,9 +2,6 @@ import datetime as date
 import time as time
 from modules.util import init_array, get_index_order
 
-#REMOVER
-import numpy as np
-
 def heuristica_bandwidth(data):
     """
     Descricao
@@ -34,7 +31,7 @@ def heuristica_bandwidth(data):
     print("\tTermino\t- ", date.datetime.fromtimestamp(t2))
     print(" Tempo de Execucao da Heuristica REVERSE-CUTHIL-MCKEE: ", t2 - t1)
 
-    return (t2 - t1)
+    return t2 - t1
 
 
 def reverse_cuthill_mckee(data):
@@ -64,7 +61,7 @@ def reverse_cuthill_mckee(data):
                     i = order[it]
                     N_old = N
 
-                    # Adicionando vértices vizinhos
+                    # Adicionando vertices vizinhos
                     for idx in range(ptr[i], ptr[i + 1]): 
                         j = ind[idx]
                         if indices[rev_indices[j]] != -1:
@@ -72,13 +69,13 @@ def reverse_cuthill_mckee(data):
                             order[N] = j
                             N += 1
 
-                    # Adiciona valores já ordenados na lista temp_degrees
+                    # Adiciona valores ja ordenados na lista temp_degrees
                     level_len = 0
                     for k in range(N_old, N):
                         temp_degrees[level_len] = degree[order[k]]
                         level_len += 1
 
-                    # Insere os vértices já ordenados de forma crescente
+                    # Insere os vertices ja ordenados de forma crescente
                     for k in range(1, level_len):
                         temp = temp_degrees[k]
                         temp2 = order[N_old + k]
@@ -90,7 +87,7 @@ def reverse_cuthill_mckee(data):
                         temp_degrees[vertex] = temp
                         order[N_old + vertex] = temp2
 
-                # Atualiza o início e fim do próximo nível
+                # Atualiza o inicio e fim do proximo nivel
                 level_start = level_end
                 level_end = N
 
@@ -102,13 +99,13 @@ def reverse_cuthill_mckee(data):
 
 
 def node_degrees(idx, ptr, num_rows):
-    degree = init_array(num_rows) # criando novos vértices
+    degree = init_array(num_rows) # criando novos vertices
 
     for i in range(num_rows):
         degree[i] = ptr[i + 1] - ptr[i]
         for j in range(ptr[i], ptr[i + 1]):
             if idx[j] == i:
-                degree[i] += 1    # adiciona novo vértice na diagonal
+                degree[i] += 1    # adiciona novo vertice na diagonal
                 break
 
     return degree
